@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" /><title>系统设置</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/frontend/assets/style.css" />
+</head>
+<body data-page="settings">
+  <header class="topbar">
+    <div class="topbar-left"><span class="logo">🚗</span><span class="sys-name">车牌识别管理系统</span></div>
+    <div class="topbar-right"><span id="current-user-label" class="user-label">已登录：--</span><button id="logout-btn" class="btn text">退出登录</button></div>
+  </header>
+  <div class="main-container">
+    <nav class="sidebar"><ul>
+      <li class="nav-item" data-view="recognition">车牌识别（首页）</li>
+      <li class="nav-item" data-view="video">视频车牌识别</li>
+      <li class="nav-item" data-view="batch">批量识别任务</li>
+      <li class="nav-item" data-view="plates">车牌 &amp; 车主管理</li>
+      <li class="nav-item" data-view="history">历史记录 / 日志</li>
+      <li class="nav-item" data-view="settings">系统设置</li>
+    </ul></nav>
+    <main class="content">
+      <div class="page-header"><h2>系统设置</h2><p>配置识别接口地址、主题等选项。</p></div>
+      <div class="grid two-column">
+        <div class="card">
+          <h3>接口配置</h3>
+          <form id="api-form">
+            <div class="form-item"><label>识别服务地址（API Base URL）</label><input id="api" placeholder="如：http://127.0.0.1:9096/api" /><p class="field-hint">默认：当前域名 + /api</p></div>
+            <button class="btn primary">保存配置</button>
+          </form>
+        </div>
+        <div class="card">
+          <h3>前端偏好设置</h3>
+          <div class="form-item"><label>主题</label><select id="theme" class="input"><option value="light">浅色</option><option value="dark">深色</option></select></div>
+          <div class="form-item"><label>语言</label><select id="lang" class="input"><option value="zh-CN">简体中文</option><option value="en">English（占位）</option></select></div>
+        </div>
+      </div>
+      <div class="card mt">
+        <h3>缓存清理</h3>
+        <p class="field-hint">清除视频处理相关缓存（videoToImg、imgToVideo、result_videos、user_upload_videos）</p>
+        <button id="cleanup-cache" class="btn primary">清理缓存</button>
+        <div id="cleanup-result" class="field-hint" style="margin-top:8px;"></div>
+      </div>
+      <div class="card mt"><h3>关于系统</h3><p>当前版本：v1.1（多页面）</p></div>
+    </main>
+  </div>
+  <div id="toast-container"></div>
+  <script src="/frontend/assets/common.js"></script>
+  <script> if(requireAuth()) initNav(); </script>
+  <script src="/frontend/settings.js"></script>
+</body>
+</html>

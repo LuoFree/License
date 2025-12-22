@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" /><title>历史记录 / 日志</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/frontend/assets/style.css" />
+</head>
+<body data-page="history">
+  <header class="topbar">
+    <div class="topbar-left"><span class="logo">🚗</span><span class="sys-name">车牌识别管理系统</span></div>
+    <div class="topbar-right"><span id="current-user-label" class="user-label">已登录：--</span><button id="logout-btn" class="btn text">退出登录</button></div>
+  </header>
+  <div class="main-container">
+    <nav class="sidebar"><ul>
+      <li class="nav-item" data-view="recognition">车牌识别（首页）</li>
+      <li class="nav-item" data-view="video">视频车牌识别</li>
+      <li class="nav-item" data-view="batch">批量识别任务</li>
+      <li class="nav-item" data-view="plates">车牌 &amp; 车主管理</li>
+      <li class="nav-item" data-view="history">历史记录 / 日志</li>
+      <li class="nav-item" data-view="settings">系统设置</li>
+    </ul></nav>
+    <main class="content">
+      <div class="page-header"><h2>历史记录 / 日志</h2><p>当前示例将识别日志保存在浏览器本地。</p></div>
+      <div class="card">
+        <div class="filters-row">
+          <input id="hp" class="input" placeholder="按车牌号筛选" />
+          <select id="hc" class="input"><option value="">置信度：不限</option><option value="0.9">≥ 90%</option><option value="0.8">≥ 80%</option></select>
+          <button id="clear" class="btn text">清空本地日志</button>
+        </div>
+        <div id="wrap" class="table-wrapper empty"><div class="empty-hint">暂无日志记录。</div></div>
+      </div>
+    </main>
+  </div>
+  <div id="toast-container"></div>
+  <script src="/frontend/assets/common.js"></script>
+  <script> if(requireAuth()) initNav(); </script>
+  <script src="/frontend/history.js"></script>
+</body>
+</html>

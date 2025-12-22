@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" /><title>登录 - 车牌识别管理系统</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/frontend/assets/style.css" />
+</head>
+<body class="login-page">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="login-logo">🚗</div>
+      <h2 class="login-title">车牌识别管理系统</h2>
+      <p class="login-subtitle">请登录后使用系统功能</p>
+      <form id="login-form" class="login-form">
+        <div class="form-item"><label>用户名</label><input id="u" type="text" placeholder="admin" /><div class="form-error" id="ue"></div></div>
+        <div class="form-item"><label>密码</label><input id="p" type="password" placeholder="123456" /><div class="form-error" id="pe"></div></div>
+        <button class="btn primary full">登录</button>
+      </form>
+      <p class="login-tip">默认账号：<b>admin / 123456</b></p>
+    </div>
+  </div>
+  <div id="toast-container"></div>
+  <script src="/frontend/assets/common.js"></script>
+  <script>
+    initState(); updateTheme();
+    const f=document.getElementById('login-form'), u=document.getElementById('u'), p=document.getElementById('p'), ue=document.getElementById('ue'), pe=document.getElementById('pe');
+    f.addEventListener('submit',e=>{
+      e.preventDefault(); ue.textContent=""; pe.textContent="";
+      const uu=u.value.trim(), pp=p.value.trim();
+      if(!uu){ue.textContent="请输入用户名";return}
+      if(!pp){pe.textContent="请输入密码";return}
+      const ok = (uu==="admin"&&pp==="123456") || (uu==="test"&&pp==="test123");
+      if(!ok){pe.textContent="用户名或密码错误"; toast("用户名或密码错误","error"); return}
+      appState.user={username:uu,loginAt:new Date().toISOString()}; save(STORAGE_KEYS.USER,appState.user);
+      toast("登录成功"); location.replace("/recognition");
+    });
+  </script>
+</body>
+</html>

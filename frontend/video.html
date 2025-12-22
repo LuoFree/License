@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" /><title>视频车牌识别</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/frontend/assets/style.css" />
+</head>
+<body data-page="video">
+  <header class="topbar">
+    <div class="topbar-left"><span class="logo">🚗</span><span class="sys-name">车牌识别管理系统</span></div>
+    <div class="topbar-right"><span id="current-user-label" class="user-label">已登录：--</span><button id="logout-btn" class="btn text">退出登录</button></div>
+  </header>
+  <div class="main-container">
+    <nav class="sidebar"><ul>
+      <li class="nav-item" data-view="recognition">车牌识别（首页）</li>
+      <li class="nav-item" data-view="video">视频车牌识别</li>
+      <li class="nav-item" data-view="batch">批量识别任务</li>
+      <li class="nav-item" data-view="plates">车牌 &amp; 车主管理</li>
+      <li class="nav-item" data-view="history">历史记录 / 日志</li>
+      <li class="nav-item" data-view="settings">系统设置</li>
+    </ul></nav>
+    <main class="content">
+      <div class="page-header"><h2>视频车牌识别</h2><p>上传 MP4 / MOV / AVI 等视频，系统会逐帧检测车牌并输出带标注的视频结果。</p></div>
+      <div class="grid two-column main-grid">
+        <div class="card">
+          <h3>上传视频</h3>
+          <div id="video-drop" class="upload-dropzone">
+            <div class="upload-icon">🎥</div>
+            <p>拖拽视频到此处，或 <span class="link">点击选择文件</span></p>
+            <p class="upload-hint">支持 mp4 / mov / avi，建议 ≤ 300MB</p>
+            <input id="video-file" type="file" accept="video/*" class="hidden" />
+          </div>
+          <div id="video-preview" class="upload-preview hidden">
+            <video id="input-video" class="preview-video" controls></video>
+            <div class="preview-meta"><span id="video-name"></span><span id="video-size"></span></div>
+          </div>
+          <div class="form-item"><label>帧率采样 (fps)</label><input id="fps-input" type="number" value="60" min="1" max="120" /></div>
+          <div class="form-item">
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <input id="save-owner-name" class="input" style="flex:1;min-width:160px;" placeholder="车主姓名（必填）" />
+              <input id="save-owner-phone" class="input" style="flex:1;min-width:160px;" placeholder="电话（选填）" />
+            </div>
+            <p class="field-hint">填写姓名后，可在结果区选择车牌并点击“写入所选车牌”保存</p>
+          </div>
+          <div class="form-item">
+            <button id="start-video" class="btn primary">开始识别</button>
+            <button id="clear-video" class="btn text">清空</button>
+          </div>
+          <div id="video-status" class="status-line">等待选择视频</div>
+        </div>
+        <div class="card">
+          <h3>处理结果</h3>
+          <div id="video-result-empty" class="empty-hint">上传视频并开始识别，结果视频将显示在这里</div>
+          <div id="video-result" class="hidden">
+            <video id="output-video" class="preview-video" controls></video>
+            <div class="preview-meta"><span>处理帧数：<span id="frame-count">--</span></span><span>时长(估)：<span id="duration">--</span> s</span></div>
+          <div class="label">识别车牌</div>
+          <div id="plate-tags" class="tag-list"></div>
+          <div class="form-item" style="margin-top:8px;">
+            <label>选择要写入车主信息的车牌</label>
+            <div id="plate-select" class="tag-list"></div>
+            <div style="margin-top:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+              <button id="save-selected" class="btn primary small" disabled>写入所选车牌</button>
+              <span class="field-hint">勾选需要写入的车牌后，再点击“写入所选车牌”</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="card mt">
+        <div class="card-header-row"><h3>视频识别记录</h3><button id="clear-video-logs" class="btn text small">清空记录</button></div>
+        <div id="video-log" class="recent-list empty"><div class="empty-hint">暂无视频识别记录</div></div>
+      </div>
+    </main>
+  </div>
+  <div id="toast-container"></div>
+  <script src="/frontend/assets/common.js"></script>
+  <script> if(requireAuth()) initNav(); </script>
+  <script src="/frontend/video.js"></script>
+</body>
+</html>

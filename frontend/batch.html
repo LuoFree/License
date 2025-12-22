@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" /><title>批量识别任务</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/frontend/assets/style.css" />
+</head>
+<body data-page="batch">
+  <header class="topbar">
+    <div class="topbar-left"><span class="logo">🚗</span><span class="sys-name">车牌识别管理系统</span></div>
+    <div class="topbar-right"><span id="current-user-label" class="user-label">已登录：--</span><button id="logout-btn" class="btn text">退出登录</button></div>
+  </header>
+  <div class="main-container">
+    <nav class="sidebar"><ul>
+      <li class="nav-item" data-view="recognition">车牌识别（首页）</li>
+      <li class="nav-item" data-view="video">视频车牌识别</li>
+      <li class="nav-item" data-view="batch">批量识别任务</li>
+      <li class="nav-item" data-view="plates">车牌 &amp; 车主管理</li>
+      <li class="nav-item" data-view="history">历史记录 / 日志</li>
+      <li class="nav-item" data-view="settings">系统设置</li>
+    </ul></nav>
+    <main class="content">
+      <div class="page-header"><h2>批量识别任务</h2><p>一次上传多张图片，自动创建任务并批量识别。</p></div>
+      <div class="card">
+        <h3>新建批量任务</h3>
+        <div class="batch-upload">
+          <input id="files" type="file" accept="image/*" multiple class="hidden" />
+          <button id="choose" class="btn primary">选择图片</button>
+          <span id="count" class="batch-file-count">未选择文件</span>
+        </div>
+        <div class="form-item"><label>任务名称</label><input id="taskname" placeholder="任务-2025-12-10 14:30" /></div>
+        <button id="start" class="btn primary">开始识别</button>
+      </div>
+      <div class="card mt">
+        <h3>任务列表</h3>
+        <div id="list" class="table-wrapper empty"><div class="empty-hint">暂无批量任务。</div></div>
+      </div>
+      <div id="overlay" class="overlay hidden">
+        <div class="overlay-content">
+          <div class="overlay-header"><h3 id="title">任务详情</h3><button id="close" class="btn text">关闭</button></div>
+          <div id="body" class="table-wrapper"></div>
+          <div class="overlay-footer"><button id="export" class="btn primary">导出 CSV</button></div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div id="toast-container"></div>
+  <script src="/frontend/assets/common.js"></script>
+  <script> if(requireAuth()) initNav(); </script>
+  <script src="/frontend/batch.js"></script>
+</body>
+</html>
